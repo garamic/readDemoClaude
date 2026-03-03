@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual Read Receipt UX Variations</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 40px;
+      background: #f0f0f0;
+    }
+
+    .container {
+      max-width: 1800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 16px;
+      color: #111;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 48px;
+    }
+
+    .variations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .variation-card {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .variation-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #111;
+      margin-bottom: 8px;
+    }
+
+    .variation-subtitle {
+      font-size: 14px;
+      color: #3B82F6;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .variation-description {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #666;
+      margin-bottom: 20px;
+      min-height: 120px;
+    }
+
+    .phone-frame {
+      width: 375px;
+      height: 812px;
+      margin: 0 auto;
+      border-radius: 40px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      position: relative;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .key-features {
+      margin-top: 20px;
+      padding: 16px;
+      background: #f5f5f5;
+      border-radius: 12px;
+    }
+
+    .key-features h4 {
+      font-size: 12px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .key-features ul {
+      margin: 0;
+      padding-left: 20px;
+      font-size: 13px;
+      line-height: 1.8;
+      color: #666;
+    }
+
+    .ux-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .metric {
+      text-align: center;
+      padding: 12px;
+      background: white;
+      border-radius: 8px;
+    }
+
+    .metric-label {
+      font-size: 10px;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .metric-value {
+      font-size: 16px;
+      font-weight: bold;
+      color: #3B82F6;
+    }
+
+    .stars {
+      color: #FFB800;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📱 수동 읽음 처리 트리거 UX 베리에이션</h1>
+    <p class="subtitle">프리미엄 유저를 위한 5가지 혁신적인 읽음 처리 방식</p>
+
+    <div class="variations-grid">
+      <!-- Variation 1 -->
+      <div class="variation-card">
+        <div class="variation-title">Variation 1: Reassurance-First</div>
+        <div class="variation-subtitle">방향성: 안심 우선형</div>
+        <div class="variation-description">
+          <strong>핵심 컨셉:</strong> "내가 지금 스텔스 모드야" - 명확한 시각적 피드백<br><br>
+          헤더 바로 아래에 고정된 <strong>스텔스 모드 배너</strong>가 항상 표시됩니다.
+          유저는 언제든 "읽음 전송" 버튼을 탭하여 즉시 상태를 전환할 수 있습니다.
+          Glassmorphism 효과와 부드러운 토스트 알림으로 피드백을 제공합니다.
+        </div>
+        <div class="phone-frame">
+          <iframe src="variation_1.html"></iframe>
+        </div>
+        <div class="key-features">
+          <h4>주요 특징</h4>
+          <ul>
+            <li>헤더 하단 배너로 지속적인 상태 인지</li>
+            <li>원터치 읽음 전송 (Indigo 버튼)</li>
+            <li>전송 완료 시 토스트 알림 (Green)</li>
+            <li>Glassmorphism + 부드러운 애니메이션</li>
+          </ul>
+        </div>
+        <div class="ux-metrics">
+          <div class="metric">
+            <div class="metric-label">시각적 노이즈</div>
+            <div class="metric-value">높음</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">학습 곡선</div>
+            <div class="metric-value">낮음</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">혁신성</div>
+            <div class="metric-value stars">⭐⭐</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Variation 2 -->
+      <div class="variation-card">
+        <div class="variation-title">Variation 2: Immersive & Unobtrusive</div>
+        <div class="variation-subtitle">방향성: 몰입형 - 숨김 트리거</div>
+        <div class="variation-description">
+          <strong>핵심 컨셉:</strong> "필요할 때만 나타나는 유령 버튼"<br><br>
+          평소에는 UI가 전혀 보이지 않아 완전한 몰입이 가능합니다.
+          <strong>메시지 영역을 한 번 탭</strong>하면 우측 하단에서 FAB(Floating Action Button)이 슬라이드 인되고, 3초 후 자동으로 사라집니다.
+          FAB을 탭하면 성공 애니메이션과 함께 읽음이 전송됩니다.
+        </div>
+        <div class="phone-frame">
+          <iframe src="variation_2.html"></iframe>
+        </div>
+        <div class="key-features">
+          <h4>주요 특징</h4>
+          <ul>
+            <li>메시지 영역 탭 시 FAB 표시 (3초간)</li>
+            <li>원형 버튼 (Indigo → Green)</li>
+            <li>체크마크 애니메이션 + 햅틱</li>
+            <li>시각적 노이즈 최소화 + 자동 숨김</li>
+          </ul>
+        </div>
+        <div class="ux-metrics">
+          <div class="metric">
+            <div class="metric-label">시각적 노이즈</div>
+            <div class="metric-value">낮음</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">학습 곡선</div>
+            <div class="metric-value">낮음</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">혁신성</div>
+            <div class="metric-value stars">⭐⭐⭐</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Variation 3 -->
+      <div class="variation-card">
+        <div class="variation-title">Variation 3: Contextual Flow</div>
+        <div class="variation-subtitle">방향성: 맥락 흐름형</div>
+        <div class="variation-description">
+          <strong>핵심 컨셉:</strong> "답장하려는 순간이 바로 읽음 처리의 자연스러운 타이밍"<br><br>
+          입력 필드를 탭하여 <strong>키보드를 활성화</strong>하면, 입력창 위에 컨텍스트 바가 슬라이드 업으로 등장합니다.
+          답장을 작성하면 자동으로 읽음 처리되거나, "지금 읽음 표시" 버튼으로 즉시 전송할 수 있습니다.
+        </div>
+        <div class="phone-frame">
+          <iframe src="variation_3.html"></iframe>
+        </div>
+        <div class="key-features">
+          <h4>주요 특징</h4>
+          <ul>
+            <li>입력 필드 포커스 시 컨텍스트 바 표시</li>
+            <li>답장 전송 시 자동 읽음 처리</li>
+            <li>수동 전송 옵션 제공</li>
+            <li>사용자 행동 흐름에 자연스럽게 통합</li>
+          </ul>
+        </div>
+        <div class="ux-metrics">
+          <div class="metric">
+            <div class="metric-label">시각적 노이즈</div>
+            <div class="metric-value">중간</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">학습 곡선</div>
+            <div class="metric-value">낮음</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">혁신성</div>
+            <div class="metric-value stars">⭐⭐⭐</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Variation 4 -->
+      <div class="variation-card">
+        <div class="variation-title">Variation 4: Behavior-Driven</div>
+        <div class="variation-subtitle">방향성: 제스처 기반형</div>
+        <div class="variation-description">
+          <strong>핵심 컨셉:</strong> "물리적 제스처로 의도를 표현"<br><br>
+          메시지 영역을 <strong>롱프레스(800ms)</strong>하면, 터치한 위치에 원형 인디케이터가 점진적으로 채워집니다.
+          완료되면 중앙에 성공 모달이 잠깐 표시됩니다.
+          UI 요소가 전혀 없어 가장 깔끔한 경험을 제공합니다.
+        </div>
+        <div class="phone-frame">
+          <iframe src="variation_4.html"></iframe>
+        </div>
+        <div class="key-features">
+          <h4>주요 특징</h4>
+          <ul>
+            <li>롱프레스 제스처 (800ms)</li>
+            <li>실시간 프로그레스 인디케이터</li>
+            <li>햅틱 피드백 + 성공 모달</li>
+            <li>UI 요소 완전 제거</li>
+          </ul>
+        </div>
+        <div class="ux-metrics">
+          <div class="metric">
+            <div class="metric-label">시각적 노이즈</div>
+            <div class="metric-value">거의 없음</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">학습 곡선</div>
+            <div class="metric-value">높음</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">혁신성</div>
+            <div class="metric-value stars">⭐⭐⭐⭐</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Variation 5 -->
+      <div class="variation-card">
+        <div class="variation-title">Variation 5: Wildcard Concept</div>
+        <div class="variation-subtitle">방향성: 와일드카드 - 혁신형</div>
+        <div class="variation-description">
+          <strong>핵심 컨셉:</strong> "프로필 사진이 바로 읽음 처리 트리거"<br><br>
+          상대방의 <strong>프로필 사진을 더블탭</strong>하면 해당 메시지까지 읽음 처리됩니다.
+          프로필이 반짝이며 체크마크가 표시되고, 타임스탬프가 "Read"로 변경됩니다.
+          메신저 UI의 통념을 깨는 가장 획기적인 방식입니다.
+        </div>
+        <div class="phone-frame">
+          <iframe src="variation_5.html"></iframe>
+        </div>
+        <div class="key-features">
+          <h4>주요 특징</h4>
+          <ul>
+            <li>프로필 사진 더블탭으로 읽음 전송</li>
+            <li>Pulse 애니메이션 + 체크마크 오버레이</li>
+            <li>타임스탬프 실시간 업데이트</li>
+            <li>UI 추가 없이 기존 요소 활용</li>
+          </ul>
+        </div>
+        <div class="ux-metrics">
+          <div class="metric">
+            <div class="metric-label">시각적 노이즈</div>
+            <div class="metric-value">전혀 없음</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">학습 곡선</div>
+            <div class="metric-value">매우 높음</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">혁신성</div>
+            <div class="metric-value stars">⭐⭐⭐⭐⭐</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
