@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Variation 4: Behavior-Driven</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+      width: 375px;
+      height: 812px;
+      margin: 0 auto;
+      background: #8cabd8;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .status-bar {
+      height: 44px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+    }
+
+    .time {
+      font-size: 15px;
+      font-weight: 600;
+      color: #000;
+      letter-spacing: -0.3px;
+    }
+
+    .status-icons {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .status-icons::after {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 12px;
+      background: #000;
+      border-radius: 3px;
+      opacity: 0.4;
+    }
+
+    .top-nav {
+      height: 44px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .back-btn {
+      width: 24px;
+      height: 24px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      color: #111;
+    }
+
+    .group-name {
+      font-size: 17px;
+      font-weight: bold;
+      color: #111;
+      letter-spacing: -0.25px;
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .icon-btn {
+      width: 24px;
+      height: 24px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .message-area {
+      position: absolute;
+      top: 88px;
+      left: 0;
+      right: 0;
+      bottom: 85px;
+      overflow-y: auto;
+      padding: 20px 8px;
+    }
+
+    .system-date {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .date-badge {
+      display: inline-block;
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+      font-size: 11px;
+      padding: 4px 12px;
+      border-radius: 12px;
+      letter-spacing: -0.22px;
+    }
+
+    .message {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 7px;
+    }
+
+    .message.sent {
+      flex-direction: row-reverse;
+      justify-content: flex-start;
+    }
+
+    .profile-pic {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #ccc;
+      flex-shrink: 0;
+    }
+
+    .message-content {
+      max-width: 70%;
+    }
+
+    .sender-name {
+      font-size: 10px;
+      color: #111;
+      opacity: 0.7;
+      font-weight: 600;
+      margin-bottom: 5px;
+      padding-left: 5px;
+      letter-spacing: -0.1px;
+    }
+
+    .bubble-container {
+      display: flex;
+      align-items: flex-end;
+      gap: 5px;
+    }
+
+    .message.sent .bubble-container {
+      flex-direction: row-reverse;
+    }
+
+    .bubble {
+      background: white;
+      padding: 8px 14px;
+      border-radius: 17px;
+      font-size: 16px;
+      color: #111;
+      letter-spacing: -0.3px;
+      position: relative;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .message.sent .bubble {
+      background: #6DE67B;
+    }
+
+    .timestamp {
+      font-size: 10px;
+      color: rgba(0, 0, 0, 0.5);
+      white-space: nowrap;
+      align-self: flex-end;
+      margin-bottom: 4px;
+    }
+
+    .read-status {
+      font-size: 10px;
+      color: rgba(0, 0, 0, 0.5);
+      text-align: right;
+      margin-bottom: 2px;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid #efefef;
+    }
+
+    .input-bar {
+      height: 51px;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .tool-btns {
+      display: flex;
+      gap: 1px;
+    }
+
+    .tool-btn {
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .input-field {
+      flex: 1;
+      height: 34px;
+      background: #f5f5f5;
+      border: 0.5px solid #efefef;
+      border-radius: 17px;
+      padding: 0 12px;
+      font-size: 15px;
+      outline: none;
+      letter-spacing: -0.075px;
+    }
+
+    .input-field::placeholder {
+      color: #c8c8c8;
+    }
+
+    .home-indicator {
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .indicator-bar {
+      width: 134px;
+      height: 5px;
+      background: #000;
+      border-radius: 100px;
+    }
+
+    /* 🎯 VARIATION 4: Long Press Indicator */
+    .longpress-indicator {
+      position: fixed;
+      width: 80px;
+      height: 80px;
+      pointer-events: none;
+      z-index: 1000;
+      display: none;
+    }
+
+    .longpress-indicator.active {
+      display: block;
+    }
+
+    .progress-ring {
+      width: 80px;
+      height: 80px;
+      transform: rotate(-90deg);
+    }
+
+    .progress-ring-circle {
+      stroke: #3B82F6;
+      stroke-width: 4;
+      fill: rgba(255, 255, 255, 0.9);
+      stroke-dasharray: 226;
+      stroke-dashoffset: 226;
+      transition: stroke-dashoffset 0.8s linear, stroke 0.3s;
+      filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.3));
+    }
+
+    .progress-ring-circle.animating {
+      stroke-dashoffset: 0;
+    }
+
+    .progress-ring-circle.complete {
+      stroke: #22C55E;
+    }
+
+    .indicator-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 32px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .longpress-indicator.active .indicator-icon {
+      opacity: 1;
+    }
+
+    /* Success Modal */
+    .success-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 32px 48px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1001;
+    }
+
+    .success-modal.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      background: #22C55E;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 36px;
+    }
+
+    .success-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: #111;
+    }
+
+    .hint-text {
+      position: fixed;
+      bottom: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 16px;
+      font-size: 12px;
+      font-weight: 500;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .hint-text.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="status-bar">
+    <div class="time">9:41</div>
+    <div class="status-icons"></div>
+  </div>
+
+  <div class="top-nav">
+    <div class="nav-left">
+      <button class="back-btn">‹</button>
+      <span class="group-name">Group Name</span>
+    </div>
+    <div class="nav-right">
+      <button class="icon-btn">🔍</button>
+      <button class="icon-btn">📞</button>
+      <button class="icon-btn">☰</button>
+    </div>
+  </div>
+
+  <div class="message-area" id="messageArea">
+    <div class="system-date">
+      <span class="date-badge">Today</span>
+    </div>
+
+    <div class="message received">
+      <div class="profile-pic" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+      <div class="message-content">
+        <div class="sender-name">Member 1</div>
+        <div class="bubble-container">
+          <div class="bubble">hi guys~~~</div>
+          <div class="timestamp">8:23 PM</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="message received">
+      <div class="profile-pic" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+      <div class="message-content">
+        <div class="sender-name">Member 2</div>
+        <div class="bubble-container">
+          <div class="bubble">hi good morning</div>
+          <div class="timestamp">8:23 PM</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="message sent">
+      <div class="message-content">
+        <div class="bubble-container">
+          <div class="read-status">Read</div>
+          <div class="timestamp">8:23 PM</div>
+          <div class="bubble">good morning</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="message received">
+      <div class="profile-pic" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+      <div class="message-content">
+        <div class="sender-name">Member 2</div>
+        <div class="bubble-container">
+          <div class="bubble">Did you guys have breakfast?</div>
+          <div class="timestamp">8:23 PM</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="message received">
+      <div class="profile-pic" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+      <div class="message-content">
+        <div class="sender-name">Member 1</div>
+        <div class="bubble-container">
+          <div class="bubble">not yet</div>
+          <div class="timestamp">8:23 PM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="input-bar">
+      <div class="tool-btns">
+        <button class="tool-btn">+</button>
+        <button class="tool-btn">📷</button>
+        <button class="tool-btn">🖼️</button>
+      </div>
+      <input type="text" class="input-field" placeholder="Aa">
+      <button class="tool-btn">😊</button>
+    </div>
+    <div class="home-indicator">
+      <div class="indicator-bar"></div>
+    </div>
+  </div>
+
+  <!-- 🎯 VARIATION 4: Long Press Components -->
+  <div class="longpress-indicator" id="indicator">
+    <svg class="progress-ring">
+      <circle class="progress-ring-circle" id="progressCircle" cx="40" cy="40" r="36"></circle>
+    </svg>
+    <div class="indicator-icon">👁️</div>
+  </div>
+
+  <div class="success-modal" id="successModal">
+    <div class="success-icon">✓</div>
+    <div class="success-text">읽음 전송 완료</div>
+  </div>
+
+  <div class="hint-text" id="hintText">메시지 영역을 길게 눌러 읽음 전송</div>
+
+  <script>
+    const messageArea = document.getElementById('messageArea');
+    const indicator = document.getElementById('indicator');
+    const progressCircle = document.getElementById('progressCircle');
+    const successModal = document.getElementById('successModal');
+    const hintText = document.getElementById('hintText');
+
+    let longpressTimer;
+    let touchStartTime;
+    let hasShownHint = false;
+
+    // Show hint on first load
+    setTimeout(() => {
+      hintText.classList.add('show');
+      setTimeout(() => {
+        hintText.classList.remove('show');
+        hasShownHint = true;
+      }, 3000);
+    }, 500);
+
+    messageArea.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      const x = touch.clientX - 40;
+      const y = touch.clientY - 40;
+
+      indicator.style.left = x + 'px';
+      indicator.style.top = y + 'px';
+      indicator.classList.add('active');
+      progressCircle.classList.add('animating');
+
+      longpressTimer = setTimeout(() => {
+        // Complete!
+        progressCircle.classList.add('complete');
+
+        setTimeout(() => {
+          indicator.classList.remove('active');
+          showSuccessModal();
+
+          // Reset
+          setTimeout(() => {
+            progressCircle.classList.remove('animating', 'complete');
+          }, 500);
+        }, 200);
+      }, 800);
+    });
+
+    messageArea.addEventListener('touchend', () => {
+      clearTimeout(longpressTimer);
+      indicator.classList.remove('active');
+      progressCircle.classList.remove('animating', 'complete');
+    });
+
+    messageArea.addEventListener('touchmove', () => {
+      clearTimeout(longpressTimer);
+      indicator.classList.remove('active');
+      progressCircle.classList.remove('animating', 'complete');
+    });
+
+    function showSuccessModal() {
+      successModal.classList.add('show');
+
+      setTimeout(() => {
+        successModal.classList.remove('show');
+      }, 1500);
+    }
+
+    // Mouse events for desktop testing
+    let mouseDownTimer;
+    messageArea.addEventListener('mousedown', (e) => {
+      const x = e.clientX - 40;
+      const y = e.clientY - 40;
+
+      indicator.style.left = x + 'px';
+      indicator.style.top = y + 'px';
+      indicator.classList.add('active');
+      progressCircle.classList.add('animating');
+
+      mouseDownTimer = setTimeout(() => {
+        progressCircle.classList.add('complete');
+
+        setTimeout(() => {
+          indicator.classList.remove('active');
+          showSuccessModal();
+
+          setTimeout(() => {
+            progressCircle.classList.remove('animating', 'complete');
+          }, 500);
+        }, 200);
+      }, 800);
+    });
+
+    messageArea.addEventListener('mouseup', () => {
+      clearTimeout(mouseDownTimer);
+      indicator.classList.remove('active');
+      progressCircle.classList.remove('animating', 'complete');
+    });
+  </script>
+</body>
+</html>

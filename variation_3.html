@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Variation 3: Contextual Flow</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+      width: 375px;
+      height: 812px;
+      margin: 0 auto;
+      background: #8cabd8;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .status-bar {
+      height: 44px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+    }
+
+    .time {
+      font-size: 15px;
+      font-weight: 600;
+      color: #000;
+      letter-spacing: -0.3px;
+    }
+
+    .status-icons {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .status-icons::after {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 12px;
+      background: #000;
+      border-radius: 3px;
+      opacity: 0.4;
+    }
+
+    .top-nav {
+      height: 44px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .back-btn {
+      width: 24px;
+      height: 24px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      color: #111;
+    }
+
+    .group-name {
+      font-size: 17px;
+      font-weight: bold;
+      color: #111;
+      letter-spacing: -0.25px;
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .icon-btn {
+      width: 24px;
+      height: 24px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .message-area {
+      position: absolute;
+      top: 88px;
+      left: 0;
+      right: 0;
+      bottom: 85px;
+      overflow-y: auto;
+      padding: 20px 8px;
+    }
+
+    .system-date {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .date-badge {
+      display: inline-block;
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+      font-size: 11px;
+      padding: 4px 12px;
+      border-radius: 12px;
+      letter-spacing: -0.22px;
+    }
+
+    .message {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 7px;
+    }
+
+    .message.sent {
+      flex-direction: row-reverse;
+      justify-content: flex-start;
+    }
+
+    .profile-pic {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #ccc;
+      flex-shrink: 0;
+    }
+
+    .message-content {
+      max-width: 70%;
+    }
+
+    .sender-name {
+      font-size: 10px;
+      color: #111;
+      opacity: 0.7;
+      font-weight: 600;
+      margin-bottom: 5px;
+      padding-left: 5px;
+      letter-spacing: -0.1px;
+    }
+
+    .bubble-container {
+      display: flex;
+      align-items: flex-end;
+      gap: 5px;
+    }
+
+    .message.sent .bubble-container {
+      flex-direction: row-reverse;
+    }
+
+    .bubble {
+      background: white;
+      padding: 8px 14px;
+      border-radius: 17px;
+      font-size: 16px;
+      color: #111;
+      letter-spacing: -0.3px;
+      position: relative;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .message.sent .bubble {
+      background: #6DE67B;
+    }
+
+    .timestamp {
+      font-size: 10px;
+      color: rgba(0, 0, 0, 0.5);
+      white-space: nowrap;
+      align-self: flex-end;
+      margin-bottom: 4px;
+    }
+
+    .read-status {
+      font-size: 10px;
+      color: rgba(0, 0, 0, 0.5);
+      text-align: right;
+      margin-bottom: 2px;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid #efefef;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .footer.focused {
+      bottom: 0;
+    }
+
+    /* 🎯 VARIATION 3: Contextual Bar */
+    .contextual-bar {
+      height: 0;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      opacity: 0;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .contextual-bar.visible {
+      height: 44px;
+      opacity: 1;
+    }
+
+    .contextual-text {
+      font-size: 13px;
+      color: #64748B;
+      font-weight: 500;
+    }
+
+    .inline-read-btn {
+      background: #3B82F6;
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(59, 130, 246, 0.25);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .inline-read-btn:active {
+      transform: scale(0.95);
+    }
+
+    .inline-read-btn.sent {
+      background: #22C55E;
+      pointer-events: none;
+    }
+
+    .input-bar {
+      height: 51px;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .tool-btns {
+      display: flex;
+      gap: 1px;
+    }
+
+    .tool-btn {
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .input-field {
+      flex: 1;
+      height: 34px;
+      background: #f5f5f5;
+      border: 0.5px solid #efefef;
+      border-radius: 17px;
+      padding: 0 12px;
+      font-size: 15px;
+      outline: none;
+      letter-spacing: -0.075px;
+    }
+
+    .input-field::placeholder {
+      color: #c8c8c8;
+    }
+
+    .home-indicator {
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .indicator-bar {
+      width: 134px;
+      height: 5px;
+      background: #000;
+      border-radius: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="status-bar">
+    <div class="time">9:41</div>
+    <div class="status-icons"></div>
+  </div>
+
+  <div class="top-nav">
+    <div class="nav-left">
+      <button class="back-btn">‹</button>
+      <span class="group-name">Group Name</span>
+    </div>
+    <div class="nav-right">
+      <button class="icon-btn">🔍</button>
+      <button class="icon-btn">📞</button>
+      <button class="icon-btn">☰</button>
+    </div>
+  </div>
+
+  <div class="message-area">
+    <div class="system-date">
+      <span class="date-badge">Today</span>
+    </div>
+
+    <div class="message received">
+      <div class="profile-pic" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+      <div class="message-content">
+        <div class="sender-name">Member 1</div>
+        <div class="bubble-container">
+          <div class="bubble">hi guys~~~</div>
+          <div class="timestamp">8:23 PM</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="message received">
+      <div class="profile-pic" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+      <div class="message-content">
+        <div class="sender-name">Member 2</div>
+        <div class="bubble-container">
+          <div class="bubble">hi good morning</div>
+          <div class="timestamp">8:23 PM</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="message sent">
+      <div class="message-content">
+        <div class="bubble-container">
+          <div class="read-status">Read</div>
+          <div class="timestamp">8:23 PM</div>
+          <div class="bubble">good morning</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="message received">
+      <div class="profile-pic" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+      <div class="message-content">
+        <div class="sender-name">Member 2</div>
+        <div class="bubble-container">
+          <div class="bubble">Did you guys have breakfast?</div>
+          <div class="timestamp">8:23 PM</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="message received">
+      <div class="profile-pic" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+      <div class="message-content">
+        <div class="sender-name">Member 1</div>
+        <div class="bubble-container">
+          <div class="bubble">not yet</div>
+          <div class="timestamp">8:23 PM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <!-- 🎯 VARIATION 3: Contextual Bar -->
+    <div class="contextual-bar" id="contextualBar">
+      <span class="contextual-text">답장하면 자동으로 읽음 전송 또는</span>
+      <button class="inline-read-btn" id="inlineReadBtn">지금 읽음 표시</button>
+    </div>
+
+    <div class="input-bar">
+      <div class="tool-btns">
+        <button class="tool-btn">+</button>
+        <button class="tool-btn">📷</button>
+        <button class="tool-btn">🖼️</button>
+      </div>
+      <input type="text" class="input-field" id="inputField" placeholder="Aa">
+      <button class="tool-btn" id="sendBtn">😊</button>
+    </div>
+    <div class="home-indicator">
+      <div class="indicator-bar"></div>
+    </div>
+  </div>
+
+  <script>
+    const inputField = document.getElementById('inputField');
+    const contextualBar = document.getElementById('contextualBar');
+    const inlineReadBtn = document.getElementById('inlineReadBtn');
+    const sendBtn = document.getElementById('sendBtn');
+    let autoSendReadOnMessage = true;
+
+    inputField.addEventListener('focus', () => {
+      contextualBar.classList.add('visible');
+    });
+
+    inputField.addEventListener('blur', () => {
+      setTimeout(() => {
+        if (!inputField.value && !inlineReadBtn.classList.contains('sent')) {
+          contextualBar.classList.remove('visible');
+        }
+      }, 200);
+    });
+
+    inlineReadBtn.addEventListener('click', () => {
+      // Send read receipt immediately
+      inlineReadBtn.textContent = '읽음 전송됨 ✓';
+      inlineReadBtn.classList.add('sent');
+      autoSendReadOnMessage = false;
+
+      setTimeout(() => {
+        contextualBar.classList.remove('visible');
+        setTimeout(() => {
+          inlineReadBtn.textContent = '지금 읽음 표시';
+          inlineReadBtn.classList.remove('sent');
+        }, 300);
+      }, 1000);
+    });
+
+    // Simulate send message
+    sendBtn.addEventListener('click', () => {
+      if (inputField.value && autoSendReadOnMessage) {
+        // Auto send read receipt when sending message
+        console.log('Auto sending read receipt with message');
+        inputField.value = '';
+        contextualBar.classList.remove('visible');
+      }
+    });
+  </script>
+</body>
+</html>

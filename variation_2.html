@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Variation 2: Immersive & Unobtrusive</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+      width: 375px;
+      height: 812px;
+      margin: 0 auto;
+      background: #8cabd8;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .status-bar {
+      height: 44px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+    }
+
+    .time {
+      font-size: 15px;
+      font-weight: 600;
+      color: #000;
+      letter-spacing: -0.3px;
+    }
+
+    .status-icons {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .status-icons::after {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 12px;
+      background: #000;
+      border-radius: 3px;
+      opacity: 0.4;
+    }
+
+    .top-nav {
+      height: 44px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .back-btn {
+      width: 24px;
+      height: 24px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      color: #111;
+    }
+
+    .group-name {
+      font-size: 17px;
+      font-weight: bold;
+      color: #111;
+      letter-spacing: -0.25px;
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .icon-btn {
+      width: 24px;
+      height: 24px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .message-area {
+      position: absolute;
+      top: 88px;
+      left: 0;
+      right: 0;
+      bottom: 85px;
+      overflow-y: auto;
+      padding: 20px 8px;
+    }
+
+    .system-date {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .date-badge {
+      display: inline-block;
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+      font-size: 11px;
+      padding: 4px 12px;
+      border-radius: 12px;
+      letter-spacing: -0.22px;
+    }
+
+    .message {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 7px;
+    }
+
+    .message.sent {
+      flex-direction: row-reverse;
+      justify-content: flex-start;
+    }
+
+    .profile-pic {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #ccc;
+      flex-shrink: 0;
+    }
+
+    .message-content {
+      max-width: 70%;
+    }
+
+    .sender-name {
+      font-size: 10px;
+      color: #111;
+      opacity: 0.7;
+      font-weight: 600;
+      margin-bottom: 5px;
+      padding-left: 5px;
+      letter-spacing: -0.1px;
+    }
+
+    .bubble-container {
+      display: flex;
+      align-items: flex-end;
+      gap: 5px;
+    }
+
+    .message.sent .bubble-container {
+      flex-direction: row-reverse;
+    }
+
+    .bubble {
+      background: white;
+      padding: 8px 14px;
+      border-radius: 17px;
+      font-size: 16px;
+      color: #111;
+      letter-spacing: -0.3px;
+      position: relative;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .message.sent .bubble {
+      background: #6DE67B;
+    }
+
+    .timestamp {
+      font-size: 10px;
+      color: rgba(0, 0, 0, 0.5);
+      white-space: nowrap;
+      align-self: flex-end;
+      margin-bottom: 4px;
+    }
+
+    .read-status {
+      font-size: 10px;
+      color: rgba(0, 0, 0, 0.5);
+      text-align: right;
+      margin-bottom: 2px;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid #efefef;
+    }
+
+    .input-bar {
+      height: 51px;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .tool-btns {
+      display: flex;
+      gap: 1px;
+    }
+
+    .tool-btn {
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .input-field {
+      flex: 1;
+      height: 34px;
+      background: #f5f5f5;
+      border: 0.5px solid #efefef;
+      border-radius: 17px;
+      padding: 0 12px;
+      font-size: 15px;
+      outline: none;
+      letter-spacing: -0.075px;
+    }
+
+    .input-field::placeholder {
+      color: #c8c8c8;
+    }
+
+    .home-indicator {
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .indicator-bar {
+      width: 134px;
+      height: 5px;
+      background: #000;
+      border-radius: 100px;
+    }
+
+    /* 🎯 VARIATION 2: Floating Action Button (FAB) */
+    .fab {
+      position: fixed;
+      bottom: 100px;
+      right: -60px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #3B82F6;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 100;
+    }
+
+    .fab.visible {
+      right: 16px;
+    }
+
+    .fab.success {
+      background: #22C55E;
+      animation: successPulse 0.6s ease-out;
+    }
+
+    .fab svg {
+      width: 28px;
+      height: 28px;
+      color: white;
+    }
+
+    @keyframes successPulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.15);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes checkmark {
+      0% {
+        stroke-dashoffset: 50;
+      }
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .fab .checkmark {
+      display: none;
+      stroke-dasharray: 50;
+      stroke-dashoffset: 50;
+    }
+
+    .fab.success .eye-check {
+      display: none;
+    }
+
+    .fab.success .checkmark {
+      display: block;
+      animation: checkmark 0.4s ease-out forwards;
+    }
+
+    /* Hint Text */
+    .hint-text {
+      position: fixed;
+      bottom: 180px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.75);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 99;
+      white-space: nowrap;
+    }
+
+    .hint-text.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="status-bar">
+    <div class="time">9:41</div>
+    <div class="status-icons"></div>
+  </div>
+
+  <div class="top-nav">
+    <div class="nav-left">
+      <button class="back-btn">‹</button>
+      <span class="group-name">Group Name</span>
+    </div>
+    <div class="nav-right">
+      <button class="icon-btn">🔍</button>
+      <button class="icon-btn">📞</button>
+      <button class="icon-btn">☰</button>
+    </div>
+  </div>
+
+  <div class="message-area" id="messageArea">
+    <div class="system-date">
+      <span class="date-badge">Today</span>
+    </div>
+
+    <div class="message received">
+      <div class="profile-pic" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+      <div class="message-content">
+        <div class="sender-name">Member 1</div>
+        <div class="bubble-container">
+          <div class="bubble">hi guys~~~</div>
+          <div class="timestamp">8:23 PM</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="message received">
+      <div class="profile-pic" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+      <div class="message-content">
+        <div class="sender-name">Member 2</div>
+        <div class="bubble-container">
+          <div class="bubble">hi good morning</div>
+          <div class="timestamp">8:23 PM</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="message sent">
+      <div class="message-content">
+        <div class="bubble-container">
+          <div class="read-status">Read</div>
+          <div class="timestamp">8:23 PM</div>
+          <div class="bubble">good morning</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="message received">
+      <div class="profile-pic" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+      <div class="message-content">
+        <div class="sender-name">Member 2</div>
+        <div class="bubble-container">
+          <div class="bubble">Did you guys have breakfast?</div>
+          <div class="timestamp">8:23 PM</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="message received">
+      <div class="profile-pic" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+      <div class="message-content">
+        <div class="sender-name">Member 1</div>
+        <div class="bubble-container">
+          <div class="bubble">not yet</div>
+          <div class="timestamp">8:23 PM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="input-bar">
+      <div class="tool-btns">
+        <button class="tool-btn">+</button>
+        <button class="tool-btn">📷</button>
+        <button class="tool-btn">🖼️</button>
+      </div>
+      <input type="text" class="input-field" placeholder="Aa">
+      <button class="tool-btn">😊</button>
+    </div>
+    <div class="home-indicator">
+      <div class="indicator-bar"></div>
+    </div>
+  </div>
+
+  <!-- 🎯 VARIATION 2: FAB -->
+  <button class="fab" id="fab">
+    <svg class="eye-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+      <circle cx="12" cy="12" r="3"></circle>
+      <polyline points="9 11 12 14 15 10"></polyline>
+    </svg>
+    <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+  </button>
+
+  <!-- Hint Text -->
+  <div class="hint-text" id="hintText">💡 메시지 영역을 탭하여 읽음 버튼 표시</div>
+
+  <script>
+    const messageArea = document.getElementById('messageArea');
+    const fab = document.getElementById('fab');
+    const hintText = document.getElementById('hintText');
+    let fabVisible = false;
+    let fabHideTimer = null;
+    let hasShownHint = false;
+
+    // Show hint on first load
+    setTimeout(() => {
+      hintText.classList.add('show');
+      setTimeout(() => {
+        hintText.classList.remove('show');
+        hasShownHint = true;
+      }, 3000);
+    }, 500);
+
+    // Tap message area to show FAB
+    messageArea.addEventListener('click', (e) => {
+      // Don't trigger if clicking on a message bubble
+      if (e.target.closest('.bubble')) return;
+
+      if (!fabVisible) {
+        showFAB();
+      }
+    });
+
+    function showFAB() {
+      fab.classList.add('visible');
+      fabVisible = true;
+
+      // Clear existing timer
+      if (fabHideTimer) {
+        clearTimeout(fabHideTimer);
+      }
+
+      // Auto-hide after 3 seconds
+      fabHideTimer = setTimeout(() => {
+        if (!fab.classList.contains('success')) {
+          fab.classList.remove('visible');
+          fabVisible = false;
+        }
+      }, 3000);
+    }
+
+    // FAB click handler
+    fab.addEventListener('click', (e) => {
+      e.stopPropagation();
+
+      if (fab.classList.contains('success')) return;
+
+      // Clear auto-hide timer
+      if (fabHideTimer) {
+        clearTimeout(fabHideTimer);
+      }
+
+      // Send read receipt
+      fab.classList.add('success');
+
+      // Hide after animation
+      setTimeout(() => {
+        fab.classList.remove('visible');
+        setTimeout(() => {
+          fab.classList.remove('success');
+          fabVisible = false;
+        }, 400);
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
